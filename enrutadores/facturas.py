@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException,status
 from modelos.clientes import Cliente
 from modelos.facturas import Facturas, FacturasCrear,FacturasEditar
 from listas import lista_clientes, lista_facturas
+from conexion_bd import Sesion_dependecia
+from sqlmodel import select
 rutas_facturas = APIRouter()
 
 #lista_clientes: list[Cliente] = []
@@ -11,30 +13,34 @@ rutas_facturas = APIRouter()
 
 
 @rutas_facturas.get("/facturas",response_model=list[Facturas])
-async def listar_facturas():
+async def listar_facturas(sesion: Sesion_dependecia):
+    #select * from factura
+    consulta = select(Facturas)
+    lista_facturas = sesion.exec(consulta).all()
     return lista_facturas
 
 
 
 @rutas_facturas.post("/facturas/{cliente_id}",response_model=Facturas)
-async def crear_factura(cliente_id: int, datos_factura: FacturasCrear):
-    #Buscar cliente
-    cliente_encontrado = None
-    for cliente in lista_clientes:
-        if cliente.id == cliente_id:
-            cliente_encontrado = cliente
-    
+async def crear_factura(cliente_id: int, datos_factura: FacturasCrear, sesion: Sesion_dependecia):
+    #Buscar cliente en bd
+
+    cliente_encontrado = sesion.get(Cliente, cliente_id)
+   #Mnesaje si no existe cliente
     if not cliente_encontrado:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"El cliente con id {cliente_id} no existe"
         )
 
-    #Validar datos factura
-    factura_val = Facturas.model_validate(datos_factura.model_dump())
-    factura_val.cliente = cliente_encontrado
-    #id factura
-    factura_val.id = len(lista_facturas) + 1
-    lista_facturas.append(factura_val)
+
+    #Validar datos de la factura-json, pasar dict
+    factura_dict = datos_factura.model_dump()
+    factura_dict["cliente_id"] = cliente_id
+    factura_val = Facturas.model_validate(factura_dict)
+    #guardar en bd
+    sesion.add(factura_val)
+    sesion.commit()
+    sesion.refresh(factura_val)
     return factura_val
 
 @rutas_facturas.get("/facturas/{factura_id}",response_model=Facturas)
