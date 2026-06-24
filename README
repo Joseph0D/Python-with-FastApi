@@ -1,2 +1,36 @@
+ Inicios del proyecto
+
+Aprendiendo 1 FastAPI, creación del proyecto.
+Aprendiendo 2 FastAPI, configuración repositorio git.
+Aprendiendo 3 FastAPI, creación de los endpoint para listar clientes.
+Aprendiendo 4 FastAPI, creación carpeta modelos.
+Aprendiendo 5 FastAPI, navegar entre commit del repositorio.
+Aprendiendo 6 FastAPI, creación del endpoint editar y modificación del endpoint listar un cliente.
+
+Facturas y estructura de endpoints
+
+Aprendiendo 7 FastAPI, crear todos los endpoint vacíos.
+Aprendiendo 8 FastAPI, edición del endpoint listar una factura.
+Aprendiendo 9 FastAPI, endpoint Crear Factura.
+Aprendiendo 10 FastAPI, terminar crear el endpoint Factura.
+Aprendiendo 11 FastAPI, estructuración del proyecto.
+Aprendiendo 12 FastAPI, enrutador de clientes.
+
+ Base de datos y SQLModel
+
+Aprendiendo 13 FastAPI, enrutador completo y listas globales.
+Aprendiendo 14 FastAPI, instalación SQLModel parte 1.
+Aprendiendo 15 FastAPI, SQLModel parte 2 creación de clientes y listar todos.
+
+CRUD y relaciones avanzadas
+
+Aprendiendo 16 FastAPI, CRUD completo clientes.
+Aprendiendo 17 FastAPI, tablas y relaciones.
+Aprendiendo 18 FastAPI, listar crear factura BD.
+Aprendiendo 19 FastAPI, listar crear transacciones BD.
+Aprendiendo 20 FastAPI, relación virtual.
+Aprendiendo 21 FastAPI, relación virtual final.
+
+
 SERVER http://127.0.0.1:8000
 SERVER http://127.0.0.1:8000/docs
