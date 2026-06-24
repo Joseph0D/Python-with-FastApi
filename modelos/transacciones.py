@@ -15,4 +15,10 @@ class TransaccionesEditar(TransaccionBase):
 class Transacciones(TransaccionBase, table=True):
     id: int | None = Field(default=None , primary_key=True)
     factura_id: int | None = Field(default=None, foreign_key="facturas.id")
-    #aqui va la relacion con el modelo factura(solo un campo)
+    #aqui va la relacion virtual  con el modelo factura(solo un campo)
+    #OP
+    factura: list["Facturas"] = Relationship(back_populates="transacciones")
+
+    #crear modelo para mostrar la usuario o el cliente
+    class TransaccionLeer(TransaccionBase):
+        id: int 
