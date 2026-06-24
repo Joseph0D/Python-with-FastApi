@@ -1,8 +1,9 @@
 from pydantic import BaseModel
+from sqlmodel import SQLModel, Field, Relationship
 
-class TransaccionBase(BaseModel):
-    cantidad: int
-    valor_unitario: float
+class TransaccionBase(SQLModel):
+    cantidad: int = Field(default=0)
+    valor_unitario: float = Field(default=0.0)
        
 class TransaccionesCrear(TransaccionBase):
     pass
@@ -10,7 +11,7 @@ class TransaccionesCrear(TransaccionBase):
 class TransaccionesEditar(TransaccionBase):
     pass
 
-class Transacciones(TransaccionBase):
-    id: int | None = None
-    factura_id: int | None = None
+class Transacciones(TransaccionBase, table=True):
+    id: int | None = Field(default=None , primary_key=True)
+    factura_id: int | None = Field(default=None, foreign_key="facturas.id")
     #aqui va la relacion con el modelo factura(solo un campo)
